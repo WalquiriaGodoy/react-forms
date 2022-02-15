@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react/cjs/react.production.min';
+import React, { Component, Fragment } from 'react/cjs/react.production.min';
 import './App.css';
 import FormularioCadastro from './componentes/FormularioCadastro/FormularioCadastro';
 
