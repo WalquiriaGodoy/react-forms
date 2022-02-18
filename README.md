@@ -27,6 +27,8 @@
 - Usando o estado para controlar a exibição de erros
 - Recebendo validação de maneira externa
 - Como deixar os componentes mais reutilizáveis
+- Boas práticas de UX ao trabalharmos com formulários
+- Por que separar um formulário em muitas partes
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
