@@ -1,14 +1,35 @@
 import {Button, TextField} from "@material-ui/core";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
 
 function DadosUsuario({aoEnviar}){
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [erros, setErros] = useState( {senha: {valido:true, texto:""} })
+    const validacoes = useContext(ValidacoesCadastro);
+
+    function validarCampos(evento) {
+        const {name, value} = evento.target;
+        const novoEstado = {...erros}
+        novoEstado[name] = validacoes[name](value);
+        setErros(novoEstado);
+    }
+
+    function possoEnviar(){
+        for(let campo in erros){
+            if(!erros[campo].valido){
+                return false;
+            }
+        }
+        return true;
+    }
 
     return(
         <form onSubmit={(evento)=>{
             evento.preventDefault();
+            if (possoEnviar()){
             aoEnviar({email, senha});
+            }
         }}>
 
             <TextField 
@@ -17,6 +38,7 @@ function DadosUsuario({aoEnviar}){
                     setEmail(evento.target.value);
                 }}
                 id="email" 
+                name="email"
                 label="email" 
                 type="email"
                 required
@@ -29,7 +51,11 @@ function DadosUsuario({aoEnviar}){
                 onChange={(evento)=>{
                     setSenha(evento.target.value);
                 }}
+                onBlur={validarCampos}
+                error={!erros.senha.valido}
+                helperText={erros.senha.texto}
                 id="senha" 
+                name="senha"
                 label="senha" 
                 type="password"
                 required
@@ -42,7 +68,7 @@ function DadosUsuario({aoEnviar}){
             type='submit' 
             variant="contained" 
             color="primary">
-            Cadastrar
+            Próximo
             </Button>
 
         </form>
